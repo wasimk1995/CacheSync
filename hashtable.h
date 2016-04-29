@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <queue>
+#include "trie.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ class HashTable {
         const static unsigned int size_max = 250000;
         string keys[size_max];
         int values[size_max];
+        Trie mytrie;
     };
 
 #endif // HASHTABLE_H

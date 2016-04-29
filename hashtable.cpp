@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include "trie.h"
 
 HashTable::HashTable() {
     for (int i = 0; i < size_max; i++) {
@@ -18,6 +19,7 @@ HashTable::HashTable(string filename){
     int tempd;
     vector<string> data;
 
+
     filedata.open(filename.c_str());
     while(getline(filedata,line)){
         data.push_back(line);
@@ -28,6 +30,7 @@ HashTable::HashTable(string filename){
         iss.str(data[i]);
         iss >> tempq >> tempd;
         keys[i] = tempq;
+        mytrie.insert(tempq);
         values[i] = tempd;
     }
 }
@@ -67,7 +70,10 @@ void HashTable::insert(const string& key, const int& value) {
         return;
     }
     keys[index] = key;
+    mytrie.insert(key);
     values[index] += value;
+
+
 }
 
 void FillMap(vector<string> &queries1, vector<string> &queries2,
