@@ -34,9 +34,11 @@ HashTable::HashTable(string filename){
         iss.clear();
         iss.str(data[i]);
         iss >> tempq >> tempd;
-        keys[i] = tempq;
+        const string str = tempq;
+        unsigned int index = hash(str);
+        keys[index] = tempq;
         mytrie.insert(tempq);
-        values[i] = tempd;
+        values[index] = tempd;
     }
 }
 
@@ -45,7 +47,7 @@ unsigned int HashTable::hash(const string& k)
     unsigned int value = 0 ;
     int length = k.length();
     for (int i = 0; i < length; i++)
-        value = 37*value + k[i];
+        value = (37*value + k[i]) % size_max;
     return value;
 }
 
@@ -61,16 +63,15 @@ int HashTable::find_index(const string& key, bool override_duplicate_key = true)
     unsigned int h = hash(key) % size_max, offset = 0, index;
     while (offset < size_max) {
         index = (h + offset) % size_max;
-        if (keys[index].empty() ||
-            (override_duplicate_key && keys[index] == key))
-        return index;
+        if (keys[index].empty() || (override_duplicate_key && keys[index] == key))
+            return index;
         offset++;
     }
     return -1;
 }
 
 void HashTable::insert(const string& key, const int& value) {
-    int index = find_index(key);
+    int index = find_index(key,true);
     if (index == -1) {
         cerr << "Table is full!" << endl;
         return;

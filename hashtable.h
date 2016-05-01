@@ -20,7 +20,7 @@ class HashTable {
         void print();
         unsigned int hash(const string& key);
         int find_index(const string& key, bool override_duplicated_key);
-        const static unsigned int size_max = 250000;
+        const static int size_max = 250000;
         string keys[size_max];
         int values[size_max];
         Trie mytrie;

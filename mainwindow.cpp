@@ -69,36 +69,45 @@ MainWindow::MainWindow(QWidget *parent) :
     layout->addWidget(text,4,1);
     connect(Enter,SIGNAL(clicked()),this, SLOT(clickedslot()));
 
+    count = 0;
+
     //connect(searchEnter,SIGNAL(textEdited(QString)),this,lineEdited());
 }
 
 void MainWindow::clickedslot(){
-   string autostring = (searchEnter->text()).toStdString();
-   vector<string> autoc = hash->mytrie.autocomplete(autostring);
-   int index;
-   vector<int> populars;
-   vector<string> results;
-   int size = autoc.size();
-   for(int i = 0; i < size; i++){
+    string autostring = (searchEnter->text()).toStdString();
+    //cout << autostring << endl;
+    vector<string> autoc = hash->mytrie.autocomplete(autostring);
+    int index;
+    vector<int> populars;
+    vector<int> counts;
+    vector<int> results;
+    int size = autoc.size();
+    for(int i = 0; i < size; i++){
        const string str = autoc[i];
        index = hash->find_index(str,true);
        populars.push_back(index);
-        }
+       counts.push_back(hash->values[index]);
+       //cout << counts[i] << endl;
+       //cout << autoc[i] <<endl;
+    }
+    size  = counts.size();
+    for(int i = 0; (i < size && i < 4);i++){
+        vector <int>::iterator stuff;
+        int ind = 0;
+        stuff = std::max_element(counts.begin(),counts.end());
+        ind = std::distance(counts.begin(),stuff);
+        cout << ind << endl;
+        results.push_back(populars[ind]);
+        counts.erase(counts.begin()+ind);
+        populars.erase(populars.begin()+ind);
+    }
 
-   for(int i = 0; i < 4;i++){
-       //insert top 5 into a seperate vector that gets printed based on rank
-       //auto biggest = populars.max_element(populars.begin(),populars.end());
-       //int ind = std::distance(populars.begin(),biggest);
-       vector <int>::iterator stuff;
-       stuff = std::max_element(populars.begin(),populars.end());
-       int ind = std::distance(populars.begin(),stuff);
-       results.push_back(autoc[ind]);
-       populars.erase(populars.begin()+ind);
-   }
     QString qstr;
     text->setText("");
-    for(int i = 0; i < 4; i++){
-        qstr = QString::fromStdString(results[i]);
+    size  = results.size();
+    for(int i = 0; i < size; i++){
+        qstr = QString::fromStdString(hash->keys[results[i]]);
         text->append(qstr);
     }
 }

@@ -27,7 +27,7 @@ private:
     QTextEdit *text;
     HashTable *hash;
     Ui::MainWindow *ui;
-    int counter;
+    int count;
 
 };
 
