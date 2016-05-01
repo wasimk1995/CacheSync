@@ -20,7 +20,7 @@ public:
 private slots:
     void clickedslot();
     void clickedSync();
-    //void lineEdited();
+    void lineEdited(QString);
 private:
     QPushButton *Enter;
     QLineEdit *searchEnter;

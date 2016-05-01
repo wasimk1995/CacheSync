@@ -71,49 +71,57 @@ MainWindow::MainWindow(QWidget *parent) :
 
     count = 0;
 
-    //connect(searchEnter,SIGNAL(textEdited(QString)),this,lineEdited());
+    connect(searchEnter,SIGNAL(textEdited(QString)),this,SLOT(lineEdited(QString)));
 }
 
 void MainWindow::clickedslot(){
-    string autostring = (searchEnter->text()).toStdString();
-    //cout << autostring << endl;
-    vector<string> autoc = hash->mytrie.autocomplete(autostring);
-    int index;
-    vector<int> populars;
-    vector<int> counts;
-    vector<int> results;
-    int size = autoc.size();
-    for(int i = 0; i < size; i++){
-       const string str = autoc[i];
-       index = hash->find_index(str,true);
-       populars.push_back(index);
-       counts.push_back(hash->values[index]);
-       //cout << counts[i] << endl;
-       //cout << autoc[i] <<endl;
-    }
-    size  = counts.size();
-    for(int i = 0; (i < size && i < 4);i++){
-        vector <int>::iterator stuff;
-        int ind = 0;
-        stuff = std::max_element(counts.begin(),counts.end());
-        ind = std::distance(counts.begin(),stuff);
-        cout << ind << endl;
-        results.push_back(populars[ind]);
-        counts.erase(counts.begin()+ind);
-        populars.erase(populars.begin()+ind);
-    }
 
-    QString qstr;
-    text->setText("");
-    size  = results.size();
-    for(int i = 0; i < size; i++){
-        qstr = QString::fromStdString(hash->keys[results[i]]);
-        text->append(qstr);
-    }
 }
 
 void MainWindow::clickedSync(){
 
+}
+
+void MainWindow::lineEdited(QString lineString){
+    if(lineString.length() > 0){
+        string autostring = (searchEnter->text()).toStdString();
+        //cout << autostring << endl;
+        vector<string> autoc = hash->mytrie.autocomplete(autostring);
+        int index;
+        vector<int> populars;
+        vector<int> counts;
+        vector<int> results;
+        int size = autoc.size();
+        for(int i = 0; i < size; i++){
+           const string str = autoc[i];
+           index = hash->find_index(str,true);
+           populars.push_back(index);
+           counts.push_back(hash->values[index]);
+           //cout << counts[i] << endl;
+           //cout << autoc[i] <<endl;
+        }
+        size  = counts.size();
+        for(int i = 0; (i < size && i < 4);i++){
+            vector <int>::iterator stuff;
+            int ind = 0;
+            stuff = std::max_element(counts.begin(),counts.end());
+            ind = std::distance(counts.begin(),stuff);
+            cout << ind << endl;
+            results.push_back(populars[ind]);
+            counts.erase(counts.begin()+ind);
+            populars.erase(populars.begin()+ind);
+        }
+
+        QString qstr;
+        text->setText("");
+        size  = results.size();
+        for(int i = 0; i < size; i++){
+            qstr = QString::fromStdString(hash->keys[results[i]]);
+            text->append(qstr);
+        }
+    }
+    else
+        text->setText("");
 }
 
 MainWindow::~MainWindow()
