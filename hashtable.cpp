@@ -39,6 +39,9 @@ HashTable::HashTable(string filename){
         keys[index] = tempq;
         mytrie.insert(tempq);
         values[index] = tempd;
+        if(filterArray.size() < index)
+            filterArray.resize(index);
+        filterArray[index] = 1;
     }
 }
 

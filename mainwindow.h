@@ -20,23 +20,28 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 private slots:
-    void clickedslot();
+    void clickedSearch();
     void clickedSync();
     void lineEdited(QString);
 private:
+    Ui::MainWindow *ui;
+
     QPushButton *Enter;
     QPushButton *syncButton;
     QLineEdit *searchEnter;
     QLineEdit *ipEnter;
     QTextEdit *text;
     HashTable *hash;
-    Ui::MainWindow *ui;
+
+    //Network Part
     Sender *mySender;
     Receiver *myReceiver;
-    vector<string> newData_key;
-    vector<int> newData_value;
-    int count;
-
+    vector<char> filterArray_send;
+    vector<char> filterArray_receive;
+    vector<string> key_send;
+    vector<string> key_receive;
+    vector<int> value_send;
+    vector<int> value_receive;
 };
 
 #endif // MAINWINDOW_H

@@ -4,6 +4,9 @@
 #include <QWidget>
 #include <QLineEdit>
 #include <QHostAddress>
+#include <vector>
+
+using namespace std;
 
 class QDialogButtonBox;
 class QLabel;
@@ -18,15 +21,9 @@ class Sender : public QWidget
 public:
     Sender(QWidget *parent = 0);
     QHostAddress *addr;
-    QByteArray *filterArray;
-    char *strings;
-    char *counts;
-    void send();
-    void receive();
-
-private slots:
-    //void startSending();
-    //void sendDatagram();
+    void sendFilter(vector<char> &);
+    void sendStrings(vector<string> &);
+    void sendCounts(vector<int> &);
 
 private:
     QUdpSocket *udpSocket;

@@ -8,6 +8,7 @@
 #include <string>
 #include <queue>
 #include "trie.h"
+const static int size_max = 250000;
 
 using namespace std;
 
@@ -20,10 +21,10 @@ class HashTable {
         void print();
         unsigned int hash(const string& key);
         int find_index(const string& key, bool override_duplicated_key);
-        const static int size_max = 250000;
         string keys[size_max];
         int values[size_max];
         Trie mytrie;
+        vector<char> filterArray;
     };
 
 #endif // HASHTABLE_H

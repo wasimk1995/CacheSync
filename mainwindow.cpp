@@ -31,72 +31,66 @@ MainWindow::MainWindow(QWidget *parent) :
     QGridLayout *layout = new QGridLayout();
     widget->setLayout(layout);
 
+    //Title of the Main Window
     QLabel *title = new QLabel();
     title->setText("PageCacheSync");
     layout->addWidget(title,0,0,1,0,Qt::AlignCenter);
     QFont f( "Arial", 25, QFont::Bold);
-    title->setFont( f);
-    /*QFont *font = title->font();
-    font->setPointSize(72);
-    font->setBold(true);
-    title->setFont(font);*/
+    title->setFont(f);
 
-    syncButton = new QPushButton();
-    syncButton->setText("Sync");
-    layout->addWidget(syncButton,1,2);
-    connect(syncButton,SIGNAL(clicked()),this,SLOT(clickedSync()));
-
+    //IP Enter location
     ipEnter = new QLineEdit();
     layout->addWidget(ipEnter,1,1);
     QLabel *ipText = new QLabel();
     ipText->setText("Enter IP Address");
     layout->addWidget(ipText,1,0);
 
+    //Sync Button
+    syncButton = new QPushButton();
+    syncButton->setText("Sync");
+    layout->addWidget(syncButton,1,2);
+    connect(syncButton,SIGNAL(clicked()),this,SLOT(clickedSync()));
+
+    //New Search Input Location
     searchEnter = new QLineEdit(this);
     layout->addWidget(searchEnter,2,1);
     QLabel *searchText = new QLabel(this);
     searchText->setText("Search for");
     layout->addWidget(searchText,2,0);
+    connect(searchEnter,SIGNAL(textEdited(QString)),this,SLOT(lineEdited(QString)));
+
+    //Search Button
     Enter = new QPushButton(this);
     Enter->setText("Enter");
+    layout->addWidget(Enter,2,2);
+    connect(Enter,SIGNAL(clicked()),this, SLOT(clickedSearch()));
 
+    //Text Box where autocomplete results show
+    text = new QTextEdit(this);
+    layout->addWidget(text,4,1);
+
+    //Add initial data to hash table
     string file = "/Users/wasimkhan/PageCache/DC1-sampleQueries.txt";
     hash = new HashTable(file);
-    //cout << hash->mytrie.autocomplete("a")[0] << endl;
-    //cout << "test" << endl;
-    //hash->print();
 
+    //Networking Part
     mySender = new Sender();
     myReceiver = new Receiver();
 
-    layout->addWidget(Enter,2,2);
-    text = new QTextEdit(this);
-    layout->addWidget(text,4,1);
-    connect(Enter,SIGNAL(clicked()),this, SLOT(clickedslot()));
-
-    connect(searchEnter,SIGNAL(textEdited(QString)),this,SLOT(lineEdited(QString)));
-
-    count = 0;
+    filterArray_send = hash->filterArray;
 }
 
-void MainWindow::clickedslot(){
-    //Record key and increment count by 1
-    //Add both to hash table
-    //Store data inside local vector
-    //Fill in index where the key, value is added
-    //If size of vector is >= 10, then call clickedSync
+void MainWindow::clickedSearch(){
+    //hash->insert(searchEnter->text());
 }
 
 void MainWindow::clickedSync(){
     syncButton->setEnabled(false);
     mySender->addr->setAddress(ipEnter->text());
     //Send byte array
-    mySender->send();
-    myReceiver->receive();
-    //Send data array
-    mySender->send();
-    myReceiver->receive();
-    syncButton->setEnabled(true);
+    mySender->sendFilter(filterArray_send);
+    //Receive byte arry
+    //myReceiver->receiveFilter(filterArray_receive);
 }
 
 void MainWindow::lineEdited(QString lineString){

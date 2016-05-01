@@ -3,11 +3,11 @@
 
 #include <QHostAddress>
 #include <QWidget>
+#include <vector>
 
-class QLabel;
-class QPushButton;
+using namespace std;
+
 class QUdpSocket;
-class QAction;
 
 class Receiver : public QWidget
 {
@@ -15,12 +15,13 @@ class Receiver : public QWidget
 
 public:
     Receiver(QWidget *parent = 0);
-    void receive();
+    QHostAddress *addr;
+    void receiveFilter(vector<char> &);
+    void receiveStrings(vector<string> &);
+    void receiveCounts(vector<int> &);
 
 private:
     QUdpSocket *udpSocket;
-    QHostAddress *addr;
-    QByteArray *infoArray;
 };
 
 #endif

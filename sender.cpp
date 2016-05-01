@@ -2,19 +2,25 @@
 #include <QtNetwork>
 
 #include "sender.h"
+#include "string.h"
 
 Sender::Sender(QWidget *parent)
     : QWidget(parent)
 {
     udpSocket = new QUdpSocket(this);
     addr = new QHostAddress();
-    filterArray = new QByteArray();
 }
 
-void Sender::send(/*char* array, int num*/){
-    //QByteArray datagram = QByteArray::fromRawData(array, num);
-    //udpSocket->writeDatagram(datagram.data(),datagram.size(),*addr,45455);
+//Sender for Char Array
+void Sender::sendFilter(vector<char> &datagram){
+    QByteArray myData = QByteArray(reinterpret_cast<const char*>(datagram.data()), datagram.size());
+    udpSocket->writeDatagram(myData.data(),myData.size(),*addr,45455);
 }
+
+//Sender for Keys
+
+
+//Sender for Values
 
 /*void Sender::sendDatagram()
 {
