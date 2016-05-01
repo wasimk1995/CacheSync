@@ -9,16 +9,11 @@ Sender::Sender(QWidget *parent)
     udpSocket = new QUdpSocket(this);
     addr = new QHostAddress();
     filterArray = new QByteArray();
-
-    //connect(timer, SIGNAL(timeout()), this, SLOT(sendDatagram()));
 }
 
-void Sender::send(){
-
-}
-
-void Sender::receive(){
-
+void Sender::send(char* array, int num){
+    QByteArray datagram = QByteArray::fromRawData(array, num);
+    udpSocket->writeDatagram(datagram.data(),datagram.size(),*addr,45455);
 }
 
 /*void Sender::sendDatagram()

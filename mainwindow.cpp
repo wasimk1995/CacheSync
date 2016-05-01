@@ -74,15 +74,28 @@ MainWindow::MainWindow(QWidget *parent) :
 
     count = 0;
 
+    while(1){
+        //keep checking size of vector and if at least 10 items are added, then automatically sync
+        qApp->processEvents();
+        usleep(1000000000);
+    }
+
     connect(searchEnter,SIGNAL(textEdited(QString)),this,SLOT(lineEdited(QString)));
 }
 
 void MainWindow::clickedslot(){
-
+    //Record key and increment count by 1
+    //Add both to hash table
+    //Store data inside local vector
+    //Fill in index where the key, value is added
 }
 
 void MainWindow::clickedSync(){
     mySender->addr->setAddress(ipEnter->text());
+    //Send byte array
+    mySender->send();
+    mySender->receive();
+    //Send data array
     mySender->send();
     mySender->receive();
 }
