@@ -6,6 +6,8 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include "hashtable.h"
+#include "sender.h"
+#include "receiver.h"
 namespace Ui {
 class MainWindow;
 }
@@ -24,9 +26,14 @@ private slots:
 private:
     QPushButton *Enter;
     QLineEdit *searchEnter;
+    QLineEdit *ipEnter;
     QTextEdit *text;
     HashTable *hash;
     Ui::MainWindow *ui;
+    Sender *mySender;
+    Receiver *myReceiver;
+    vector<string> newData_key;
+    vector<int> newData_value;
     int count;
 
 };

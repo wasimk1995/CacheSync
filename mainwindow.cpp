@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "hashtable.h"
 #include "trie.h"
+#include "sender.h"
 #include <QApplication>
 #include <QBoxLayout>
 #include <QPushButton>
@@ -44,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     layout->addWidget(syncButton,1,2);
     connect(syncButton,SIGNAL(clicked()),this,SLOT(clickedSync()));
 
-    QLineEdit *ipEnter = new QLineEdit();
+    ipEnter = new QLineEdit();
     layout->addWidget(ipEnter,1,1);
     QLabel *ipText = new QLabel();
     ipText->setText("Enter IP Address");
@@ -64,6 +65,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //cout << "test" << endl;
     //hash->print();
 
+    mySender = new Sender();
+
     layout->addWidget(Enter,2,2);
     text = new QTextEdit(this);
     layout->addWidget(text,4,1);
@@ -79,7 +82,9 @@ void MainWindow::clickedslot(){
 }
 
 void MainWindow::clickedSync(){
-
+    mySender->addr->setAddress(ipEnter->text());
+    mySender->send();
+    mySender->receive();
 }
 
 void MainWindow::lineEdited(QString lineString){

@@ -17,21 +17,19 @@ class Sender : public QWidget
 
 public:
     Sender(QWidget *parent = 0);
+    QHostAddress *addr;
+    QByteArray *filterArray;
+    char *strings;
+    char *counts;
+    void send();
+    void receive();
 
 private slots:
-    void startSending();
-    void sendDatagram();
+    //void startSending();
+    //void sendDatagram();
 
 private:
-    QLabel *statusLabel;
-    QPushButton *startButton;
-    QPushButton *quitButton;
-    QDialogButtonBox *buttonBox;
     QUdpSocket *udpSocket;
-    QTimer *timer;
-    QLineEdit *lineBox;
-    QHostAddress *addr;
-    int messageNo;
 };
 
 #endif
