@@ -25,6 +25,7 @@ private slots:
     void lineEdited(QString);
 private:
     QPushButton *Enter;
+    QPushButton *syncButton;
     QLineEdit *searchEnter;
     QLineEdit *ipEnter;
     QTextEdit *text;

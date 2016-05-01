@@ -11,12 +11,9 @@ Receiver::Receiver(QWidget *parent)
 
     addr = new QHostAddress();
     addr->setAddress("155.41.21.13");
-
-    connect(udpSocket, SIGNAL(readyRead()),
-            this, SLOT(processPendingDatagrams()));
 }
 
-void Receiver::processPendingDatagrams()
+void Receiver::receive()
 {
     while (udpSocket->hasPendingDatagrams()) {
         QByteArray datagram;

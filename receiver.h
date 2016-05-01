@@ -15,9 +15,7 @@ class Receiver : public QWidget
 
 public:
     Receiver(QWidget *parent = 0);
-
-private slots:
-    void processPendingDatagrams();
+    void receive();
 
 private:
     QUdpSocket *udpSocket;

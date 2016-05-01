@@ -11,9 +11,9 @@ Sender::Sender(QWidget *parent)
     filterArray = new QByteArray();
 }
 
-void Sender::send(char* array, int num){
-    QByteArray datagram = QByteArray::fromRawData(array, num);
-    udpSocket->writeDatagram(datagram.data(),datagram.size(),*addr,45455);
+void Sender::send(/*char* array, int num*/){
+    //QByteArray datagram = QByteArray::fromRawData(array, num);
+    //udpSocket->writeDatagram(datagram.data(),datagram.size(),*addr,45455);
 }
 
 /*void Sender::sendDatagram()

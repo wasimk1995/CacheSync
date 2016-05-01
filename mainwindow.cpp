@@ -3,6 +3,7 @@
 #include "hashtable.h"
 #include "trie.h"
 #include "sender.h"
+#include "receiver.h"
 #include <QApplication>
 #include <QBoxLayout>
 #include <QPushButton>
@@ -40,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     font->setBold(true);
     title->setFont(font);*/
 
-    QPushButton *syncButton = new QPushButton();
+    syncButton = new QPushButton();
     syncButton->setText("Sync");
     layout->addWidget(syncButton,1,2);
     connect(syncButton,SIGNAL(clicked()),this,SLOT(clickedSync()));
@@ -66,21 +67,16 @@ MainWindow::MainWindow(QWidget *parent) :
     //hash->print();
 
     mySender = new Sender();
+    myReceiver = new Receiver();
 
     layout->addWidget(Enter,2,2);
     text = new QTextEdit(this);
     layout->addWidget(text,4,1);
     connect(Enter,SIGNAL(clicked()),this, SLOT(clickedslot()));
 
-    count = 0;
-
-    while(1){
-        //keep checking size of vector and if at least 10 items are added, then automatically sync
-        qApp->processEvents();
-        usleep(1000000000);
-    }
-
     connect(searchEnter,SIGNAL(textEdited(QString)),this,SLOT(lineEdited(QString)));
+
+    count = 0;
 }
 
 void MainWindow::clickedslot(){
@@ -88,16 +84,19 @@ void MainWindow::clickedslot(){
     //Add both to hash table
     //Store data inside local vector
     //Fill in index where the key, value is added
+    //If size of vector is >= 10, then call clickedSync
 }
 
 void MainWindow::clickedSync(){
+    syncButton->setEnabled(false);
     mySender->addr->setAddress(ipEnter->text());
     //Send byte array
     mySender->send();
-    mySender->receive();
+    myReceiver->receive();
     //Send data array
     mySender->send();
-    mySender->receive();
+    myReceiver->receive();
+    syncButton->setEnabled(true);
 }
 
 void MainWindow::lineEdited(QString lineString){
