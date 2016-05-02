@@ -28,25 +28,25 @@ void Receiver::receiveFilter(vector<char> &data)
 }
 
 //Receiver for Keys
-/*void Receiver::receiveStrings(vector<string> &data)
+void Receiver::receiveStrings(vector<string> &data)
 {
     data.clear();
-    while (udpSocket->hasPendingDatagrams()) {
+    /*while (udpSocket->hasPendingDatagrams()) {
         QByteArray datagram;
         datagram.resize(udpSocket->pendingDatagramSize());
         udpSocket->readDatagram(datagram.data(), datagram.size(),addr);
         data.insert(data.end(),datagram.begin(),datagram.end());
-    }
+    }*/
 }
 
 //Receiver for Values
 void Receiver::receiveCounts(vector<int> &data)
 {
     data.clear();
-    while (udpSocket->hasPendingDatagrams()) {
+    /*while (udpSocket->hasPendingDatagrams()) {
         QByteArray datagram;
         datagram.resize(udpSocket->pendingDatagramSize());
         udpSocket->readDatagram(datagram.data(), datagram.size(),addr);
         data.insert(data.end(),datagram.begin(),datagram.end());
-    }
-}*/
+    }*/
+}

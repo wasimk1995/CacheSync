@@ -92,6 +92,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::clickedSearch(){
     //hash->insert(searchEnter->text());
+
+    //Store in Local Vector to be sent later once the size gets to 10
+    //Vector.add
+    //If size > 10
 }
 
 void MainWindow::clickedSync(){
@@ -101,6 +105,21 @@ void MainWindow::clickedSync(){
     mySender->sendFilter(filterArray_send);
     //Receive byte arry
     myReceiver->receiveFilter(filterArray_receive);
+
+    //Use Above Data and Figure Out which Elements each is missing
+
+
+
+    //Send Strings
+    //mySender->sendStrings(key_send);
+    //Receive Strings
+    //myReceiver->receiveStrings(key_receive);
+
+    //Send Counts
+    //mySender->sendCounts(value_send);
+    //Receive Counts
+    //myReceiver->receiveCounts(value_receive);
+
 }
 
 void MainWindow::clickedLoad(){
