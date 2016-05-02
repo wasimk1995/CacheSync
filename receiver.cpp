@@ -25,6 +25,7 @@ void Receiver::receiveFilter(vector<char> &data)
         udpSocket->readDatagram(datagram.data(), datagram.size(),addr);
         data.insert(data.end(),datagram.begin(),datagram.end());
     }
+    cout << "Finished" << endl;
 }
 
 //Receiver for Keys
