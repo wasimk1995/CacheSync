@@ -17,7 +17,7 @@
 #include <iostream>
 #include <algorithm>
 #include <QTimer>
-
+//Testing Git
 using namespace std;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
