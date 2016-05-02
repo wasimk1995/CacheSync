@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     //HashTable myhash("DC1-sampleQueries.txt");
     QApplication a(argc, argv);
     MainWindow w;
+    w.setFixedSize(400,400);
 
     w.show();
 

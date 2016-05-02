@@ -22,13 +22,16 @@ public:
 private slots:
     void clickedSearch();
     void clickedSync();
+    void clickedLoad();
     void lineEdited(QString);
 private:
     Ui::MainWindow *ui;
 
     QPushButton *Enter;
     QPushButton *syncButton;
+    QPushButton *load;
     QLineEdit *searchEnter;
+    QLineEdit *searchFile;
     QLineEdit *ipEnter;
     QTextEdit *text;
     HashTable *hash;

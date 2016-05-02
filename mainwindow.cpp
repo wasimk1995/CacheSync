@@ -38,32 +38,42 @@ MainWindow::MainWindow(QWidget *parent) :
     QFont f( "Arial", 25, QFont::Bold);
     title->setFont(f);
 
+    searchFile = new QLineEdit(this);
+    layout->addWidget(searchFile,1,1);
+    QLabel *Filetext = new QLabel(this);
+    Filetext->setText("Directory");
+    layout->addWidget(Filetext,1,0);
+    load = new QPushButton(this);
+    load->setText("Load");
+    layout->addWidget(load,1,2);
+    connect(load,SIGNAL(clicked()),this,SLOT(clickedLoad()));
+
     //IP Enter location
     ipEnter = new QLineEdit();
-    layout->addWidget(ipEnter,1,1);
+    layout->addWidget(ipEnter,2,1);
     QLabel *ipText = new QLabel();
     ipText->setText("Enter IP Address");
-    layout->addWidget(ipText,1,0);
-
-    //Sync Button
-    syncButton = new QPushButton();
-    syncButton->setText("Sync");
-    layout->addWidget(syncButton,1,2);
-    connect(syncButton,SIGNAL(clicked()),this,SLOT(clickedSync()));
-
-    //New Search Input Location
-    searchEnter = new QLineEdit(this);
-    layout->addWidget(searchEnter,2,1);
-    QLabel *searchText = new QLabel(this);
-    searchText->setText("Search for");
-    layout->addWidget(searchText,2,0);
-    connect(searchEnter,SIGNAL(textEdited(QString)),this,SLOT(lineEdited(QString)));
+    layout->addWidget(ipText,2,0);
 
     //Search Button
     Enter = new QPushButton(this);
     Enter->setText("Enter");
     layout->addWidget(Enter,2,2);
     connect(Enter,SIGNAL(clicked()),this, SLOT(clickedSearch()));
+
+    //New Search Input Location
+    searchEnter = new QLineEdit(this);
+    layout->addWidget(searchEnter,3,1);
+    QLabel *searchText = new QLabel(this);
+    searchText->setText("Search for");
+    layout->addWidget(searchText,3,0);
+    connect(searchEnter,SIGNAL(textEdited(QString)),this,SLOT(lineEdited(QString)));
+
+    //Sync Button
+    syncButton = new QPushButton();
+    syncButton->setText("Sync");
+    layout->addWidget(syncButton,3,2);
+    connect(syncButton,SIGNAL(clicked()),this,SLOT(clickedSync()));
 
     //Text Box where autocomplete results show
     text = new QTextEdit(this);
@@ -90,7 +100,12 @@ void MainWindow::clickedSync(){
     //Send byte array
     mySender->sendFilter(filterArray_send);
     //Receive byte arry
-    //myReceiver->receiveFilter(filterArray_receive);
+    myReceiver->receiveFilter(filterArray_receive);
+}
+
+void MainWindow::clickedLoad(){
+    string file = (searchFile->text()).toStdString();
+    hash = new HashTable(file);
 }
 
 void MainWindow::lineEdited(QString lineString){
@@ -108,8 +123,6 @@ void MainWindow::lineEdited(QString lineString){
            index = hash->find_index(str,true);
            populars.push_back(index);
            counts.push_back(hash->values[index]);
-           //cout << counts[i] << endl;
-           //cout << autoc[i] <<endl;
         }
         size  = counts.size();
         for(int i = 0; (i < size && i < 4);i++){
@@ -117,7 +130,6 @@ void MainWindow::lineEdited(QString lineString){
             int ind = 0;
             stuff = std::max_element(counts.begin(),counts.end());
             ind = std::distance(counts.begin(),stuff);
-            cout << ind << endl;
             results.push_back(populars[ind]);
             counts.erase(counts.begin()+ind);
             populars.erase(populars.begin()+ind);
