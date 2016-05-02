@@ -14,7 +14,7 @@ Sender::Sender(QWidget *parent)
 //Sender for Char Array
 void Sender::sendFilter(vector<char> &datagram){
     QByteArray myData = QByteArray(reinterpret_cast<const char*>(datagram.data()), datagram.size());
-    udpSocket->writeDatagram(myData.data(),myData.size(),*addr,45455);
+    udpSocket->writeDatagram(myData.data(),myData.size(),*addr,45454);
 }
 
 //Sender for Keys

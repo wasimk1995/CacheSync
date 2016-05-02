@@ -5,12 +5,13 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <ctime>
 
 Receiver::Receiver(QWidget *parent)
     : QWidget(parent)
 {
     udpSocket = new QUdpSocket(this);
-    udpSocket->bind(45454, QUdpSocket::ShareAddress);
+    udpSocket->bind(45455, QUdpSocket::ShareAddress);
 
     addr = new QHostAddress();
 }
@@ -25,6 +26,8 @@ void Receiver::receiveFilter(vector<char> &data)
         udpSocket->readDatagram(datagram.data(), datagram.size(),addr);
         data.insert(data.end(),datagram.begin(),datagram.end());
     }
+    cout << "Syncing..." << endl;
+    sleep(3);
     cout << "Finished" << endl;
 }
 
