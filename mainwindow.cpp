@@ -101,10 +101,14 @@ void MainWindow::clickedSearch(){
 void MainWindow::clickedSync(){
     syncButton->setEnabled(false);
     mySender->addr->setAddress(ipEnter->text());
+    for(int i = 0; i < filterArray_send.size(); i++)
+        cout << filterArray_send[i] << endl;
+    cout << filterArray_send.size() << endl;
     //Send byte array
     mySender->sendFilter(filterArray_send);
     //Receive byte arry
     myReceiver->receiveFilter(filterArray_receive);
+    cout << filterArray_receive.size() << endl;
 
     //Use Above Data and Figure Out which Elements each is missing
 
@@ -119,6 +123,7 @@ void MainWindow::clickedSync(){
     //mySender->sendCounts(value_send);
     //Receive Counts
     //myReceiver->receiveCounts(value_receive);
+    syncButton->setEnabled(true);
 
 }
 

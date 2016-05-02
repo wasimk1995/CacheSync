@@ -29,6 +29,7 @@ HashTable::HashTable(string filename){
     }
     filedata.close();
 
+    filterArray.resize(size_max);
     int size = data.size();
     for (int i = 0; i < size; i++) {
         iss.clear();
@@ -39,8 +40,6 @@ HashTable::HashTable(string filename){
         keys[index] = tempq;
         mytrie.insert(tempq);
         values[index] = tempd;
-        if(filterArray.size() < index)
-            filterArray.resize(index);
         filterArray[index] = 1;
     }
 }
