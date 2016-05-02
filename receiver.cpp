@@ -4,6 +4,7 @@
 #include "receiver.h"
 #include <vector>
 #include <string>
+#include <iostream>
 
 Receiver::Receiver(QWidget *parent)
     : QWidget(parent)
@@ -12,7 +13,6 @@ Receiver::Receiver(QWidget *parent)
     udpSocket->bind(45454, QUdpSocket::ShareAddress);
 
     addr = new QHostAddress();
-    addr->setAddress("155.41.21.13");
 }
 
 //Receiver for Filter

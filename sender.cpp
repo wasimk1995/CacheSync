@@ -25,7 +25,7 @@ void sendStrings(vector<string> &datagram){
 //Sender for Values
 void sendCounts(vector<int> &datagram){
     QByteArray myData;
-    udpSocket->writeDatagram(myData.data(),myData.size(),*addr,45455);
+    //udpSocket->writeDatagram(myData.data(),myData.size(),*addr,45455);
 }
 
 /*void Sender::sendDatagram()

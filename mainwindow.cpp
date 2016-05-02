@@ -58,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Search Button
     Enter = new QPushButton(this);
     Enter->setText("Enter");
-    layout->addWidget(Enter,2,2);
+    layout->addWidget(Enter,3,2);
     connect(Enter,SIGNAL(clicked()),this, SLOT(clickedSearch()));
 
     //New Search Input Location
@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Sync Button
     syncButton = new QPushButton();
     syncButton->setText("Sync");
-    layout->addWidget(syncButton,3,2);
+    layout->addWidget(syncButton,2,2);
     connect(syncButton,SIGNAL(clicked()),this,SLOT(clickedSync()));
 
     //Text Box where autocomplete results show
