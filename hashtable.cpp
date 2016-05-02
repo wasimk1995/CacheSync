@@ -29,6 +29,7 @@ HashTable::HashTable(string filename){
     }
     filedata.close();
 
+    filterArray.resize(size_max);
     int size = data.size();
     for (int i = 0; i < size; i++) {
         iss.clear();

@@ -35,6 +35,7 @@ private:
     QLineEdit *ipEnter;
     QTextEdit *text;
     HashTable *hash;
+    QTimer *timer;
 
     //Network Part
     Sender *mySender;

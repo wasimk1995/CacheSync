@@ -4,6 +4,7 @@
 #include "trie.h"
 #include "sender.h"
 #include "receiver.h"
+#include "unistd.h"
 #include <QApplication>
 #include <QBoxLayout>
 #include <QPushButton>
@@ -15,6 +16,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <QTimer>
 
 using namespace std;
 MainWindow::MainWindow(QWidget *parent) :
@@ -55,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ipText->setText("Enter IP Address");
     layout->addWidget(ipText,2,0);
 
+
     //Search Button
     Enter = new QPushButton(this);
     Enter->setText("Enter");
@@ -80,7 +83,7 @@ MainWindow::MainWindow(QWidget *parent) :
     layout->addWidget(text,4,1);
 
     //Add initial data to hash table
-    string file = "/Users/wasimkhan/PageCache/DC1-sampleQueries.txt";
+    string file = "/Users/austin5/Desktop/CacheSync/DC1-sampleQueries.txt";
     hash = new HashTable(file);
 
     //Networking Part
@@ -91,23 +94,45 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::clickedSearch(){
-    //hash->insert(searchEnter->text());
-
-    //Store in Local Vector to be sent later once the size gets to 10
-    //Vector.add
-    //If size > 10
+    QString test = searchEnter->text();
+    hash->insert(test.toStdString(),1);
 }
 
 void MainWindow::clickedSync(){
+    syncButton->setEnabled(false);
+    QString test = ipEnter->text();
+    cout << test.toStdString() << endl;
     syncButton->setEnabled(false);
     mySender->addr->setAddress(ipEnter->text());
     //Send byte array
     mySender->sendFilter(filterArray_send);
     //Receive byte arry
     myReceiver->receiveFilter(filterArray_receive);
-
+    cout << filterArray_receive.size() << endl;
     //Use Above Data and Figure Out which Elements each is missing
+    vector <string> data, queries;
+    vector <int> values;
+    string line, temp1;
+    int temp2;
+    ifstream filedata;
+    istringstream i1;
+    filedata.open("/Users/austin5/Desktop/CacheSync/DC2-sampleQueries.txt");
+    while (getline(filedata, line))
+        data.push_back(line);
+    filedata.close();
+    int size = data.size();
+    for (int i = 0; i < size; i++){
+        i1.clear();
+        i1.str(data[i]);
+        i1 >> temp1 >> temp2;
+        queries.push_back(temp1);
+        values.push_back(temp2);
+    }
 
+    int sizee = queries.size();
+    for (int ii = 0; ii < sizee; ii++){
+        hash->insert(queries[ii],values[ii]);
+    }
 
 
     //Send Strings
@@ -119,6 +144,7 @@ void MainWindow::clickedSync(){
     //mySender->sendCounts(value_send);
     //Receive Counts
     //myReceiver->receiveCounts(value_receive);
+    syncButton->setEnabled(true);
 
 }
 
